@@ -193,6 +193,15 @@ executable stack
                 , http-client
   default-language:    Haskell2010
 
+executable runstack
+  hs-source-dirs: src/runstack
+  main-is:        Main.hs
+  ghc-options:    -Wall -threaded -rtsopts -with-rtsopts=-N
+
+  build-depends: base
+               , process
+  default-language:    Haskell2010
+
 test-suite stack-test
   type:           exitcode-stdio-1.0
   hs-source-dirs: src/test
