@@ -16,6 +16,7 @@ import           Control.Monad
 import           Control.Monad.IO.Class
 import           Control.Monad.Logger
 import           Control.Monad.Reader (ask)
+import           Data.Attoparsec.Args (withRunStackArgs)
 import qualified Data.ByteString.Lazy as L
 import           Data.Char (toLower)
 import           Data.List
@@ -66,7 +67,7 @@ import           System.Process.Read
 
 -- | Commandline dispatcher.
 main :: IO ()
-main =
+main = withRunStackArgs $ \args ->
   do -- Line buffer the output by default, particularly for non-terminal runs.
      -- See https://github.com/commercialhaskell/stack/pull/360
      hSetBuffering stdout LineBuffering
@@ -76,7 +77,6 @@ main =
        plugins <- findPlugins (T.pack stackProgName)
        tryRunPlugin plugins
      progName <- getProgName
-     args <- getArgs
      isTerminal <- hIsTerminalDevice stdout
      execExtraHelp args
                    dockerHelpOptName
